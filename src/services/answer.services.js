@@ -11,6 +11,18 @@ class AnswersServices {
         }
     }
     
+    static async delete(id) {
+        try {
+            const result = await Answers.destroy({
+                where: {
+                    id
+                }
+            })
+            return result
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 module.exports = AnswersServices;

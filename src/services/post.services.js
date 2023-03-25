@@ -37,6 +37,43 @@ class PostsServices {
             throw error
         }
     }
+
+    static async getAll() {
+        try {
+            const result = await Posts.findAll({
+                attributes: {
+                    exclude: [
+                        "description",
+                        "categoryId",
+                        "author",
+                        "category_id"
+                    ]
+                },
+                include: [{
+                    model: Users,
+                    attributes: ["username"]
+                },
+                {
+                    model: Categories,
+                    attributes: ["name"]
+                }]
+            })
+            return result;
+        } catch (error) {
+            throw error
+        }
+    }
+
+    static async update(newData, id) {
+        try {
+            const result = await Posts.update(newData, {
+                where: { id }
+            });
+            return result
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 module.exports = PostsServices;

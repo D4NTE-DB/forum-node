@@ -3,13 +3,14 @@ const Categories = require('../models/category.models');
 const Posts = require('../models/post.models');
 const Users = require('../models/user.models');
 const { createUser, updateUser } = require("../controllers/user.controllers");
-const { update } = require('../services/user.services');
+const { createUserValidator } = require('../validators/user.validators');
+
 
 const router = Router();
 
 // * SELECT * FROM users JOIN posts ON user.id-post.author WHERE users.id-1;
 
-router.get('/api/v1/users/:id/posts', async (req, res) =>{
+router.get('/api/v1/users/:id/posts', async (req, res) => {
     try {
         const { id } = req.params
         const userPosts = await Users.findByPk(id, {
@@ -21,7 +22,7 @@ router.get('/api/v1/users/:id/posts', async (req, res) =>{
                     model: Categories,
                     attributes: ["name"]
                 }
-            },       
+            },
         })
         res.json(userPosts)
     } catch (error) {
@@ -29,17 +30,18 @@ router.get('/api/v1/users/:id/posts', async (req, res) =>{
     }
 });
 
-router.post("/api/v1/users", createUser)
+router.post("/api/v1/users", createUserValidator ,createUser)
 router.put("/api/v1/users", updateUser)
+
 
 module.exports = router;
 
-//TODO 
+//TODO
 // * Users
 // * crear usuarios
 // * editar usuarios
 // ! Posts
-// ! un usuario pueda crear una publicacion 
+// ! un usuario pueda crear una publicacion
 // ! un usuario pueda editar una publicacion
 // ! un usuario pueda obtener todsa las publicaciones
 // ! un usuario pueda obtener una publicacion con todos sus mensajes

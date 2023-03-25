@@ -1,8 +1,11 @@
 const UsersServices = require("../services/user.services")
 
+
 const createUser = async (req, res) => {
     try {
         const newUser = req.body
+        //validar
+
         const result = await UsersServices.create(newUser)
         res.status(201).json(result)
     } catch (error) {

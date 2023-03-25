@@ -24,6 +24,26 @@ const getPostWithAnswers = async (req, res) => {
     }
 };
 
+const getAllPosts = async (req, res) => {
+    try {
+        const posts = await PostsServices.getAll()
+        res.json(posts)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
+
+const updatePost = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const newData = req.body;
+        await PostsServices.update(newData, id);
+        res.status(204).send()
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
+
 module.exports = {
-    createPost, getPostWithAnswers
+    createPost, getPostWithAnswers,getAllPosts, updatePost
 }

@@ -11,8 +11,16 @@ const createAnswer = async (req, res) => {
     }
 }
 
-
+const deleteAnswer = async (req, res) => {
+    try {
+        const {id} = req.params;
+        await AnswersServices.delete(id)
+        res.status(204).send()
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
 
 module.exports = {
-    createAnswer
+    createAnswer, deleteAnswer
 }
